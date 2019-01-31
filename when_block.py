@@ -26,17 +26,20 @@ class Case(PropertyHolder):
                            order=1)
 
 @output('else', label='Else')
-@output('match', label='', default=True)
+@output('then', label='', default=True)
 class When(Block):
     subject = Property(default=None,
                        title='Subject',
                        allow_none=True,
                        order=0)
-    cases = ListProperty(Case, title='Cases', default=[], order=1)
+    cases = ListProperty(Case,
+                         title='Cases',
+                         default=[],
+                         order=1)
     version = VersionProperty('0.1.0')
 
     def process_signals(self, in_sigs):
-        matched_signals = []
+        then_signals = []
         else_signals = []
 
         for signal in in_sigs:
@@ -53,13 +56,13 @@ class When(Block):
                     value = attr.formula(signal)
                     setattr(sig, title, value)
 
-                matched_signals.append(sig)
+                then_signals.append(sig)
                 break
             else:
                 else_signals.append(signal)
 
-        if len(matched_signals):
-            self.notify_signals(matched_signals, 'match')
+        if len(then_signals):
+            self.notify_signals(then_signals, 'then')
 
         if len(else_signals):
             self.notify_signals(else_signals, 'else')
