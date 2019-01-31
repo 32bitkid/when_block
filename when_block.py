@@ -3,7 +3,6 @@ from enum import Enum
 from nio.block import output
 from nio.block.base import Block
 from nio.signal.base import Signal
-from nio.block.terminals import DEFAULT_TERMINAL
 from nio.properties import BoolProperty, Property, ListProperty, PropertyHolder, \
     SelectProperty, VersionProperty
 
@@ -15,7 +14,9 @@ class SignalField(PropertyHolder):
                        order=1)
 
 class Case(PropertyHolder):
-    when = Property(default='', title='When', order=0)
+    when = Property(default='',
+                    title='When',
+                    order=0)
     attributes = ListProperty(SignalField,
                               title="Attributes",
                               default=[],
@@ -25,9 +26,12 @@ class Case(PropertyHolder):
                            order=1)
 
 @output('else', label='Else')
-@output('match', label='Match', default=True)
+@output('match', label='', default=True)
 class When(Block):
-    subject = Property(default='', title='Subject', order=0)
+    subject = Property(default=None,
+                       title='Subject',
+                       allow_none=True,
+                       order=0)
     cases = ListProperty(Case, title='Cases', default=[], order=1)
     version = VersionProperty('0.1.0')
 
@@ -55,7 +59,7 @@ class When(Block):
                 else_signals.append(signal)
 
         if len(matched_signals):
-            self.notify_signals(matched_signals, DEFAULT_TERMINAL)
+            self.notify_signals(matched_signals, 'match')
 
         if len(else_signals):
             self.notify_signals(else_signals, 'else')

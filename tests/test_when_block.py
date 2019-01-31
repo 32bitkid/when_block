@@ -1,4 +1,3 @@
-from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
 from ..when_block import When
@@ -22,10 +21,10 @@ class TestClassify(NIOBlockTestCase):
         blk.start()
         blk.process_signals([Signal({"hello": "nio"})])
         blk.stop()
-        self.assert_num_signals_notified(1, blk, DEFAULT_TERMINAL)
+        self.assert_num_signals_notified(1, blk, 'match')
         self.assert_num_signals_notified(0, blk, 'else')
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+            self.last_notified['match'][0].to_dict(),
             {"hello": "nio", "goodbye": "world"})
 
     def test_dynamic_subject(self):
@@ -45,10 +44,10 @@ class TestClassify(NIOBlockTestCase):
         blk.start()
         blk.process_signals([Signal({"hello": "nio"})])
         blk.stop()
-        self.assert_num_signals_notified(1, blk, DEFAULT_TERMINAL)
+        self.assert_num_signals_notified(1, blk, 'match')
         self.assert_num_signals_notified(0, blk, 'else')
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+            self.last_notified['match'][0].to_dict(),
             {"hello": "nio", "goodbye": "world"})
 
     def test_multiple_signals(self):
@@ -77,12 +76,12 @@ class TestClassify(NIOBlockTestCase):
             Signal({"hello": "mouse"})
         ])
         blk.stop()
-        self.assert_num_signals_notified(2, blk, DEFAULT_TERMINAL)
+        self.assert_num_signals_notified(2, blk, 'match')
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+            self.last_notified['match'][0].to_dict(),
             {"hello": "nio", "goodbye": "world"})
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][1].to_dict(),
+            self.last_notified['match'][1].to_dict(),
             {"hello": "mouse", "goodnight": "moon"})
 
     def test_else(self):
@@ -105,11 +104,11 @@ class TestClassify(NIOBlockTestCase):
             Signal({"hello": "mouse"})
         ])
         blk.stop()
-        self.assert_num_signals_notified(1, blk, DEFAULT_TERMINAL)
+        self.assert_num_signals_notified(1, blk, 'match')
         self.assert_num_signals_notified(1, blk, 'else')
 
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+            self.last_notified['match'][0].to_dict(),
             {"hello": "nio", "goodbye": "world"})
         self.assertDictEqual(
             self.last_notified['else'][0].to_dict(),
@@ -146,11 +145,11 @@ class TestClassify(NIOBlockTestCase):
             Signal({"who": "mouse", "mode": "valediction"})
         ])
         blk.stop()
-        self.assert_num_signals_notified(1, blk, DEFAULT_TERMINAL)
+        self.assert_num_signals_notified(1, blk, 'match')
         self.assert_num_signals_notified(1, blk, 'else')
 
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+            self.last_notified['match'][0].to_dict(),
             {"greeting": "hello there", "nickname": "niolabs"})
 
         self.assertDictEqual(
