@@ -15,17 +15,20 @@ class SignalField(PropertyHolder):
                        order=1)
 
 class Case(PropertyHolder):
-    when = Property(default='', title='When')
-    attributes = ListProperty(SignalField, title="Attributes", default=[])
+    when = Property(default='', title='When', order=0)
+    attributes = ListProperty(SignalField,
+                              title="Attributes",
+                              default=[],
+                              order=2)
     exclude = BoolProperty(default=False,
-                           title='Exclude existing?',
-                           order=0)
+                           title='Exclude existing attributes?',
+                           order=1)
 
 @output('else', label='Else')
 @output('match', label='Match', default=True)
 class When(Block):
-    subject = Property(default='', title='Subject')
-    cases = ListProperty(Case, title='Cases', default=[])
+    subject = Property(default='', title='Subject', order=0)
+    cases = ListProperty(Case, title='Cases', default=[], order=1)
     version = VersionProperty('0.1.0')
 
     def process_signals(self, in_sigs):
