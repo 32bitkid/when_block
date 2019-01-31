@@ -1,6 +1,6 @@
 Example
 =======
-TODO: This is a variant of a `switch`, in C-like languages, or the `when`-expression in Kotlin. The subject expression is evaulated for the signal, and then compared to each **Case**, in order, the first one that matches will be applied to the Signal and that signal will be dispached to the `default` terminal. If no **Case** matches the **Subject** then the signal will be dispacted, unchanged, to the `else` terminal.
+TODO: This is a variant of a `switch`, in C-like languages, or the `when`-expression in Kotlin. The subject expression is evaulated for the signal, and then compared to each **Case**, in order, the first one that matches will be applied to the Signal and that signal will be dispached to the `then` terminal. If no **Case** matches the **Subject** then the signal will be dispacted, unchanged, to the `else` terminal.
 
 Properties
 ----------
