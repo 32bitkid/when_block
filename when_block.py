@@ -22,7 +22,7 @@ class Case(PropertyHolder):
                            order=0)
 
 @output('else', label='Else')
-@output(DEFAULT_TERMINAL)
+@output('match', label='Match', default=True)
 class When(Block):
     subject = Property(default='', title='Subject')
     cases = ListProperty(Case, title='Cases', default=[])
